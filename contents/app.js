@@ -21,7 +21,7 @@ $('#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-rig
 
 
 
-$("button#CSN-btn").bind('click', function (e) {
+$("button#CSN-btn").bind('click', async function (e) {
     
     var videoId = window.location.href.split("=")[1];
 
@@ -82,7 +82,7 @@ $("button#CSN-btn").bind('click', function (e) {
 
     
 
-    $.get( editorUrl , async (htmlString) => {
+    await $.get( editorUrl , async (htmlString) => {
 
         $('div#MainFrame').append(`
             <iframe name="editorFrame" title="editorFrame" class="editorFrame" id="editorFrame"></iframe>
@@ -94,166 +94,27 @@ $("button#CSN-btn").bind('click', function (e) {
 
         $('div#MainFrame iframe#editorFrame').contents().find('html head').html($(editDoc.querySelector('head')).html());
         $('div#MainFrame iframe#editorFrame').contents().find('html body').html($(editDoc.querySelector('body')).html());
-
-
-            
-        await $.get( editorCSSUrl, (cssString) => {
-
-            $('div#MainFrame iframe#editorFrame').contents().find('html head')
-            .append(`
-                <style>${cssString}</style>
-            `);
-        });
-
-
-
-
-
-
-        // JS
-
-        var editorDoc = $('div#MainFrame iframe#editorFrame').contents()[0];        
-        var richTextField = editorDoc.querySelectorAll('html body iframe#richTextField')[0].contentWindow;
-        
-        richTextField.document.designMode = 'On';
-        
-
-
-        for (const elem of editorDoc.querySelectorAll('button.click-cmd')) {   
-    
-            $(elem).bind('click', function (e) {       
-                richTextField.document.execCommand( $(this).attr('clickCmd') , false, null);
-            });
-        
-        }
-
-
-
-        for (const elem of editorDoc.querySelectorAll('button.click-cmd-arg')) {   
-    
-
-            $(elem).bind('click', function (e) {       
-                
-                
-                if ($(this).attr('cmd-arg').split('prompt')) {
-                    
-                    var promptString = prompt( $(this).attr('cmd-arg').split('prompt')[1].split(',')[0].split("'")[1], '');
-                    if (promptString  != null ) 
-                        richTextField.document.execCommand( $(this).attr('clickCmdArg') , false, promptString);
-                }
-                // richTextField.document.execCommand( $(this).attr('clickCmdArg') , false, $(this).attr('cmd-arg'));
-            });
-        
-        }
-        
-        
-        for (const elem of editorDoc.querySelectorAll('.change-cmd')) {
-            $(elem).bind('change', function (e) {        
-                richTextField.document.execCommand( $(elem).attr('changeCmd') , false, $(elem).val() );
-            });
-        }
-        
-
-
-        $(richTextField.document.querySelector('head'))
-        .append(`            
-        <style>
-                img {
-                    width: 400px;
-                    height: auto;
-                }
-            </style>
-        `);
-        
-        
-        $(editorDoc.querySelector('button#pic')).bind('click', (e) => {
-
-
-            var player = $('iframe#videoFrame').contents()[0].querySelector('video.video-stream');
-            
-            var ht = parseInt(player.style.height.split('px')[0]);
-            var wd = parseInt(player.style.width.split('px')[0]);
-        
-            var canvas = document.createElement("canvas");
-            canvas.height = ht;
-            canvas.width = wd;
-            canvas.getContext('2d').drawImage(player, 0, 0, wd, ht);
-          
-            var base64Canvas = canvas.toDataURL("image/jpeg");
-        
-            richTextField.document.execCommand('insertImage', false, base64Canvas);
-
-            var currImg = richTextField.document.querySelectorAll('img');
-            currImg = currImg[currImg.length-1];
-
-            
-            $(currImg).attr('id', player.currentTime);   
-            
-            $( currImg ).bind('dblclick', function (e) {
-
-                this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
-                this.style.height = 'auto';
-            });
-
-
-
-        });
-
-
-
-        $(editorDoc.querySelector('button#inspic')).bind('click', (e) => {
-
-            
-            var picUrl = prompt("Enter the Pic URL", "");
-
-            if (picUrl != null && picUrl.length != 0) {
-
-                richTextField.document.execCommand('insertImage', false, picUrl);
-
-
-
-                var currImg = richTextField.document.querySelectorAll('img');        
-                currImg = currImg[currImg.length-1];
-
-
-                
-                $( currImg ).bind('dblclick', function (e) {
-
-                    this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
-                    this.style.height = 'auto';
-                });
-
-            }
-        });
-
-
-
-
-
-        
-        $(editorDoc.querySelector('button#pdf')).bind('click', (e) => {
-
-            richTextField.focus();
-            richTextField.print();
-            
-        });
-
-        
-        
-        
-
-
-
-
-
         
 
 
     });
 
 
+    await $.get( editorCSSUrl, (cssString) => {
+
+        $('div#MainFrame iframe#editorFrame').contents().find('html head')
+        .append(`
+            <style>${cssString}</style>
+        `);
+    });
 
 
+
+
+
+
+    // JS for editor
+    await JS();
 
 
 
@@ -267,7 +128,142 @@ $("button#CSN-btn").bind('click', function (e) {
 
 
 
+function JS() {
 
+
+    var editorDoc = $('div#MainFrame iframe#editorFrame').contents()[0];        
+    var richTextField = editorDoc.querySelectorAll('html body iframe#richTextField')[0].contentWindow;
+    
+    richTextField.document.designMode = 'On';
+    
+
+
+    for (const elem of editorDoc.querySelectorAll('button.click-cmd')) {   
+
+        $(elem).bind('click', function (e) {       
+            richTextField.document.execCommand( $(this).attr('clickCmd') , false, null);
+        });
+    
+    }
+
+
+
+    for (const elem of editorDoc.querySelectorAll('button.click-cmd-arg')) {   
+
+
+        $(elem).bind('click', function (e) {       
+            
+            
+            if ($(this).attr('cmd-arg').split('prompt')) {
+                
+                var promptString = prompt( $(this).attr('cmd-arg').split('prompt')[1].split(',')[0].split("'")[1], '');
+                if (promptString  != null ) 
+                    richTextField.document.execCommand( $(this).attr('clickCmdArg') , false, promptString);
+            }
+            // richTextField.document.execCommand( $(this).attr('clickCmdArg') , false, $(this).attr('cmd-arg'));
+        });
+    
+    }
+    
+    
+    for (const elem of editorDoc.querySelectorAll('.change-cmd')) {
+        $(elem).bind('change', function (e) {        
+            richTextField.document.execCommand( $(elem).attr('changeCmd') , false, $(elem).val() );
+        });
+    }
+    
+
+
+    $(richTextField.document.querySelector('head'))
+    .append(`            
+    <style>
+            img {
+                width: 400px;
+                height: auto;
+            }
+        </style>
+    `);
+    
+    
+    $(editorDoc.querySelector('button#pic')).bind('click', (e) => {
+
+
+        var player = $('iframe#videoFrame').contents()[0].querySelector('video.video-stream');
+        
+        var ht = parseInt(player.style.height.split('px')[0]);
+        var wd = parseInt(player.style.width.split('px')[0]);
+    
+        var canvas = document.createElement("canvas");
+        canvas.height = ht;
+        canvas.width = wd;
+        canvas.getContext('2d').drawImage(player, 0, 0, wd, ht);
+      
+        var base64Canvas = canvas.toDataURL("image/jpeg");
+    
+        richTextField.document.execCommand('insertImage', false, base64Canvas);
+
+        var currImg = richTextField.document.querySelectorAll('img');
+        currImg = currImg[currImg.length-1];
+
+        
+        $(currImg).attr('id', player.currentTime);   
+        
+        $( currImg ).bind('dblclick', function (e) {
+
+            this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
+            this.style.height = 'auto';
+        });
+
+
+
+    });
+
+
+
+    $(editorDoc.querySelector('button#inspic')).bind('click', (e) => {
+
+        
+        var picUrl = prompt("Enter the Pic URL", "");
+
+        if (picUrl != null && picUrl.length != 0) {
+
+            richTextField.document.execCommand('insertImage', false, picUrl);
+
+
+
+            var currImg = richTextField.document.querySelectorAll('img');        
+            currImg = currImg[currImg.length-1];
+
+
+            
+            $( currImg ).bind('dblclick', function (e) {
+
+                this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
+                this.style.height = 'auto';
+            });
+
+        }
+    });
+
+
+
+
+
+    
+    $(editorDoc.querySelector('button#pdf')).bind('click', (e) => {
+
+        richTextField.focus();
+        richTextField.print();
+    });
+
+    
+    
+    
+
+
+
+
+}
 
 
 
