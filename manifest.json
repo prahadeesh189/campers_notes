@@ -1,0 +1,32 @@
+{
+    "name": "CSN",
+    "version": "1.0",
+    "description":"Just a small Extension for taking notes",
+    "manifest_version": 3,
+
+
+    "content_scripts":[
+        {
+            "matches": [
+                "https://*.youtube.com/watch?v=*"
+            ],
+
+            "js":[
+                "libs/jquery-3.6.0.min.js",
+                "contents/app.js"
+            ],
+
+            "css":[
+                "contents/app.css"
+            ]
+        }
+    ],
+
+    "web_accessible_resources": [
+        {
+            "resources": [ "contents/editor/editor.html", "contents/editor/editor.js", "contents/editor/editor.css"   ],
+            "matches": [ "https://*.youtube.com/*" ]
+        }
+    ]
+
+}

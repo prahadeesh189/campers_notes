@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>editor</title>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous">
+</head>
+<body>
+    <div class="if container" style="position: absolute;border: 1px solid #f5f5f5;border-radius: 5px;box-shadow: 2px 5px 10px #e4e4e4;">
+        <div class="if nav">
+            <button data-tooltip="bold" class="click-cmd tooltip button -regular" clickCmd="bold"><i class="fa fa-bold"></i></button>
+            <button data-tooltip="italic" class="click-cmd tooltip button -regular" clickCmd="italic"><i class="fa fa-italic"></i></button>
+            <button data-tooltip="underline" class="click-cmd tooltip button -regular" clickCmd="underline"><i class="fa fa-underline"></i></button>
+            <button data-tooltip="strikeThrough" class="click-cmd tooltip button -regular" clickCmd="strikeThrough"><i class="fa fa-strikethrough"></i></button>
+            <button data-tooltip="align left" class="click-cmd tooltip button -regular" clickCmd="justifyLeft"><i class="fa fa-align-left"></i></button>
+            <button data-tooltip="align center" class="click-cmd tooltip button -regular" clickCmd="justifyCenter"><i class="fa fa-align-center"></i></button>
+            <button data-tooltip="align right" class="click-cmd tooltip button -regular" clickCmd="justifyRight"><i class="fa fa-align-right"></i></button>
+            <button data-tooltip="align justify" class="click-cmd tooltip button -regular" clickCmd="justifyFull"><i class="fa fa-align-justify"></i></button>
+            <button data-tooltip="cut" class="click-cmd tooltip button -regular" clickCmd="cut"><i class="fa fa-cut"></i></button>
+            <button data-tooltip="copy" class="click-cmd tooltip button -regular" clickCmd="copy"><i class="fa fa-copy"></i></button>
+            <button data-tooltip="unordered list" class="click-cmd tooltip button -regular" clickCmd="insertUnorderedList"><i class="fa fa-list-ul"></i></button>
+            <button data-tooltip="ordered list" class="click-cmd tooltip button -regular" clickCmd="insertOrderedList"><i class="fa fa-list-ol"></i></button>
+            <button data-tooltip="paragraph" class="click-cmd tooltip button -regular" clickCmd="bold"><i class="fa fa-paragraph"></i></button>
+            <button data-tooltip="horizontal rule" class="click-cmd tooltip button -regular" clickCmd="insertHorizontalRule">HR</button>
+            <select data-tooltip="heading" class="change-cmd tooltip button -regular" changeCmd="formatBlock">
+                <option value="">Heading</option>
+                <option value="H1">H1</option>
+                <option value="H2">H2</option>
+                <option value="H3">H3</option>
+                <option value="H4">H4</option>
+                <option value="H5">H5</option>
+                <option value="H6">H6</option>
+            </select>
+            <button data-tooltip="create link" class="click-cmd-arg tooltip button -regular" clickCmdArg="createLink" cmd-arg="prompt('Enter a URL',''))"><i class="fa fa-link"></i></button>
+            <button data-tooltip="remove link" class="click-cmd tooltip button -regular" clickCmd="unlink"><i class="fa fa-unlink"></i></button>
+            
+            
+            
+            <button data-tooltip="screen capture" id="pic" class="tooltip button -regular"><i class="far fa-images"></i></button>
+            <button data-tooltip="insert image" id="inspic" class="tooltip button -regular"><i class="far fa-file-image"></i></button>
+            
+
+
+
+            <div class="button -regular inp">
+                <label for="color">Color:</label>
+                <input id="color" data-tooltip="color" class="change-cmd tooltip inpColor" type="color" changeCmd="foreColor">
+            </div>
+            <div class="button -regular inp">
+                <label for="background">Background:</label>
+                <input id="background" data-tooltip="background" class="change-cmd tooltip inpColor" type="color" changeCmd="hiliteColor">
+            </div>
+            <select data-tooltip="font name" class="change-cmd tooltip button -regular" changeCmd="fontName">
+                <option value="">Font family</option>
+                <option value="Arial">Arial</option>
+                <option value="Comic Sans MS">Comic Sans MS</option>
+                <option value="Courier">Courier</option>
+                <option value="Georgia">Georgia</option>
+                <option value="Tahoma">Tahoma</option>
+                <option value="Roboto">Roboto</option>
+                <option value="Ubuntu">Ubuntu</option>
+                <option value="Times New Roman">Times New Roman</option>
+                <option value="Verdana">Verdana</option>
+            </select>
+            <select data-tooltip="font size" class="change-cmd tooltip button -regular" changeCmd="fontSize">
+                <option value="">Font size</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+            </select>
+    
+    
+            <button data-tooltip="Pdf" id="pdf" class="tooltip button -regular">PDF</button>
+            
+        </div>
+        <iframe name="richTextField" id="richTextField"></iframe>
+    </div>
+
+
+</body>
+</html>
