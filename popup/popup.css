@@ -1,0 +1,124 @@
+/* snip-on */
+
+body.snip-on {
+
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+
+
+    height: 200px;
+    width:  150px;
+    padding: 10px;
+}
+
+
+body.snip-on button#snip {
+
+    display: block;
+    height: 35px;
+    width:  80px;
+
+    align-self: flex-end;
+    margin-bottom: 15px;
+
+
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+
+    cursor: pointer;
+}
+
+
+
+
+body.snip-on button#snip:hover {
+    
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+body.snip-on button#snip-close-button {
+
+    display: none;
+
+}
+
+body.snip-on button#snip-close-button:hover {
+    display: none;
+}
+
+
+
+
+body.snip-on div#note {
+
+    height: auto;
+    /* width: max-content; */
+
+    align-self: flex-start;
+    font-size: 16px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* snip-off */
+
+body.snip-off {
+
+    padding: 5px;
+}
+
+
+body.snip-off button#snip {
+
+    display: none;
+}
+
+body.snip-off button#snip:hover {
+    display: none;
+}
+
+
+body.snip-off button#snip-close-button {
+
+    display: block;
+    height: 35px;
+    width:  80px;
+
+    align-self: flex-end;
+
+
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 2px solid #000000;
+
+    cursor: pointer;
+}
+
+body.snip-off button#snip-close-button:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+
+
+
+body.snip-off div#note {
+    display: none;
+}

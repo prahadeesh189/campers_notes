@@ -5,6 +5,9 @@ var svgString ="<svg width=\"28\" height=\"28\" viewBox=\"0 0 64 64\" fill=\"non
 
 
 
+
+
+
 $('#movie_player > div.ytp-chrome-bottom > div.ytp-chrome-controls > div.ytp-right-controls')
 .append(`
 
@@ -200,20 +203,6 @@ function JS() {
     
         richTextField.document.execCommand('insertImage', false, base64Canvas);
 
-        var currImg = richTextField.document.querySelectorAll('img');
-        currImg = currImg[currImg.length-1];
-
-        
-        $(currImg).attr('id', player.currentTime);   
-        
-        $( currImg ).bind('dblclick', function (e) {
-
-            this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
-            this.style.height = 'auto';
-        });
-
-
-
     });
 
 
@@ -251,20 +240,7 @@ function JS() {
                 if (typeof(picUrl) != "undefined" && picUrl.length != 0) {
 
                     richTextField.document.execCommand('insertImage', false, picUrl);
-        
-        
-        
-                    var currImg = richTextField.document.querySelectorAll('img');        
-                    currImg = currImg[currImg.length-1];
-        
-        
-                    
-                    $( currImg ).bind('dblclick', function (e) {
-        
-                        this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
-                        this.style.height = 'auto';
-                    });
-        
+    
                 }
 
             };
@@ -280,28 +256,6 @@ function JS() {
 
 
 
-
-        
-        // var picUrl = prompt("Enter the Pic URL", "");
-
-        // if (picUrl != null && picUrl.length != 0) {
-
-        //     richTextField.document.execCommand('insertImage', false, picUrl);
-
-
-
-        //     var currImg = richTextField.document.querySelectorAll('img');        
-        //     currImg = currImg[currImg.length-1];
-
-
-            
-        //     $( currImg ).bind('dblclick', function (e) {
-
-        //         this.style.width = prompt("Width: ", (''+this.style.width.split('px')[0]));
-        //         this.style.height = 'auto';
-        //     });
-
-        // }
     });
 
 
@@ -318,6 +272,24 @@ function JS() {
     
     
     
+
+
+
+
+
+    $(richTextField.document.querySelector('body')).on('dblclick', "img", (e) => {
+
+        var currImg = $(e.currentTarget);
+
+        var altwd = prompt("Width: ", (''+ currImg.css('width').split('px')[0] ));
+    
+        if (altwd != null) {
+            currImg.css('width', altwd);
+            currImg.css('height', 'auto');
+        }
+    });
+
+
 
 
 
