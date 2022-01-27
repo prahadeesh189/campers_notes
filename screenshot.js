@@ -1,14 +1,30 @@
+
+
+
+
+
+
 chrome.runtime.onMessage.addListener( async (request, sender, sendResponse) => {
 
     if( request.msg == "snip" ) {
 
+        window.onresize = (e) => {
+            console.log(e);
+        }
 
+
+
+        $("img.snip-image").remove();
         $("div#snip-bg").remove();
         $("div#snip").remove();
 
         
 
         $('body').append(`
+
+                
+            <img src="${request.imageUrl}" alt="" class="snip-image">
+
 
             <div id="snip-bg">
         
@@ -179,6 +195,7 @@ chrome.runtime.onMessage.addListener( async (request, sender, sendResponse) => {
 
             // console.log('over');
 
+            $("img.snip-image").remove();
             $('body div#snip-bg div#snip').remove();
             $('body div#snip-bg').remove();
 
@@ -196,6 +213,7 @@ chrome.runtime.onMessage.addListener( async (request, sender, sendResponse) => {
     }
     else if (request.msg == "snip-close") {
 
+        $("img.snip-image").remove();
         $("div#snip-bg").remove();
         $("div#snip").remove();
 
